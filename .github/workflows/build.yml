@@ -18,13 +18,16 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         
-    - name: Build APK
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
+      
+    - name: Build with Gradle
       run: |
-        chmod +x ./gradlew
-        ./gradlew assembleDebug
+        ./gradlew assembleDebug --stacktrace
         
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
-        name: app-debug
+        name: aksh-staffing-app
         path: app/build/outputs/apk/debug/app-debug.apk
+        retention-days: 30
